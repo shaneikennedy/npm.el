@@ -46,14 +46,14 @@
 
 
 ;; NPM TEST
-(defconst npm-test-command "npm test")
+(defconst npm-test--prefix-command "npm test")
 
 (defun npm-test--command (prefix-command &optional args)
   "Invoke the compile mode with the test PREFIX-COMMAND and ARGS if provided."
   (interactive (list (npm-arguments)))
   (save-excursion
     (let* ((project-root-folder (find-file-noselect (get-project-dir)))
-          (command 'npm-test-command))
+          (command 'npm-test--prefix-command))
       (setq compilation-read-command t)
       (set-buffer project-root-folder)
       (setq compile-command command)
