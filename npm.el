@@ -84,12 +84,43 @@
   (completing-read "Type the name of the package you want to install: " ()))
 
 
+;; NPM UPDATE
+(defconst npm-update--prefix-command "npm update")
+
+(defun npm-update--get-update-command (package-name)
+  "Construct the shell command for a given PACKAGE-NAME."
+  (concat npm-update--prefix-command " " package-name))
+
+(defun npm-update--get-packages (project-dir)
+  "Function to parse package.json in the PROJECT-DIR to find npm scripts."
+  (cdr (assoc 'dependencies (json-read-file (concat project-dir package-json-file)))))
+
+(defun npm-update--choose-package ()
+  "Let user choose which script to run."
+  (interactive)
+  (completing-read "Select script from list: " (npm-update--get-packages (get-project-dir)) nil t))
+
+
+(defun npm-update--command (prefix-command &optional args)
+  "Invoke the compile mode with the test PREFIX-COMMAND and ARGS if provided."
+  (interactive (list (npm-arguments)))
+  (save-excursion
+    (let* ((project-root-folder (find-file-noselect (get-project-dir)))
+          (command (npm-update--get-update-command (npm-update--choose-package))))
+      (setq compilation-read-command t)
+      (set-buffer project-root-folder)
+      (setq compile-command command)
+      (call-interactively 'compile)
+      (kill-buffer project-root-folder))))
+
+
 ;; Transient menus
 
 ;; Entrypoint menu
 (define-transient-command npm ()
   "Open npm transient menu pop up."
     [["Command"
+      ("u" "Update"       npm-update--command)
       ("i" "Install"       npm-install--command)
       ("r" "Run"       npm-run--command)
       ("t" "Test"       npm-test--command)]]
