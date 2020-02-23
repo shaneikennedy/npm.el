@@ -59,11 +59,38 @@
       (call-interactively 'compile)
       (kill-buffer project-root-folder))))
 
+;; NPM INSTALL
+(defconst npm-install--prefix-command "npm install")
 
-;; Transient menu
+(defun npm-install--get-install-command (package-name)
+  "Construct the shell command for a given PACKAGE-NAME."
+  (concat npm-install--prefix-command " " package-name))
+
+(defun npm-install--command (prefix-command &optional args)
+  "Invoke the compile mode with the test PREFIX-COMMAND and ARGS if provided."
+  (interactive (list (npm-arguments)))
+  (save-excursion
+    (let* ((project-root-folder (find-file-noselect (get-project-dir)))
+          (command (npm-install--get-install-command (npm-install--choose-package))))
+      (setq compilation-read-command t)
+      (set-buffer project-root-folder)
+      (setq compile-command command)
+      (call-interactively 'compile)
+      (kill-buffer project-root-folder))))
+
+(defun npm-install--choose-package ()
+  "Let user choose which script to run."
+  (interactive)
+  (completing-read "Type the name of the package you want to install: " ()))
+
+
+;; Transient menus
+
+;; Entrypoint menu
 (define-transient-command npm ()
   "Open npm transient menu pop up."
     [["Command"
+      ("i" "Install"       npm-install--command)
       ("r" "Run"       npm-run--command)
       ("t" "Test"       npm-test--command)]]
   (interactive)
