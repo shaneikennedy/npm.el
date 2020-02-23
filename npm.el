@@ -16,11 +16,11 @@
 
 
 ;; NPM RUN
-(defconst npm-run-prefix "npm run")
+(defconst npm-run--prefix-command "npm run")
 
 (defun npm-run--get-run-command (script-name)
   "Construct the shell command for a given SCRIPT-NAME."
-  (concat npm-run-prefix " " script-name))
+  (concat npm-run--prefix-command " " script-name))
 
 (defun npm-run--get-scripts (project-dir)
   "Function to parse package.json in the PROJECT-DIR to find npm scripts."
