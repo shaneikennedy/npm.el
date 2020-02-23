@@ -44,6 +44,7 @@
       (call-interactively 'compile)
       (kill-buffer project-root-folder))))
 
+
 ;; NPM TEST
 (defconst npm-test-command "npm test")
 
@@ -59,12 +60,18 @@
       (call-interactively 'compile)
       (kill-buffer project-root-folder))))
 
+
 ;; NPM INSTALL
 (defconst npm-install--prefix-command "npm install")
 
 (defun npm-install--get-install-command (package-name)
   "Construct the shell command for a given PACKAGE-NAME."
   (concat npm-install--prefix-command " " package-name))
+
+(defun npm-install--choose-package ()
+  "Let user choose which script to run."
+  (interactive)
+  (completing-read "Type the name of the package you want to install: " ()))
 
 (defun npm-install--command (prefix-command &optional args)
   "Invoke the compile mode with the test PREFIX-COMMAND and ARGS if provided."
@@ -77,11 +84,6 @@
       (setq compile-command command)
       (call-interactively 'compile)
       (kill-buffer project-root-folder))))
-
-(defun npm-install--choose-package ()
-  "Let user choose which script to run."
-  (interactive)
-  (completing-read "Type the name of the package you want to install: " ()))
 
 
 ;; NPM UPDATE
@@ -99,7 +101,6 @@
   "Let user choose which script to run."
   (interactive)
   (completing-read "Select script from list: " (npm-update--get-packages (get-project-dir)) nil t))
-
 
 (defun npm-update--command (prefix-command &optional args)
   "Invoke the compile mode with the test PREFIX-COMMAND and ARGS if provided."
