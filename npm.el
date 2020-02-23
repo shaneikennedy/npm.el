@@ -44,11 +44,28 @@
       (call-interactively 'compile)
       (kill-buffer project-root-folder))))
 
+;; NPM TEST
+(defconst npm-test-command "npm test")
+
+(defun npm-test--command (prefix-command &optional args)
+  "Invoke the compile mode with the test PREFIX-COMMAND and ARGS if provided."
+  (interactive (list (npm-arguments)))
+  (save-excursion
+    (let* ((project-root-folder (find-file-noselect (get-project-dir)))
+          (command 'npm-test-command))
+      (setq compilation-read-command t)
+      (set-buffer project-root-folder)
+      (setq compile-command command)
+      (call-interactively 'compile)
+      (kill-buffer project-root-folder))))
+
+
 ;; Transient menu
 (define-transient-command npm ()
   "Open npm transient menu pop up."
     [["Command"
-    ("r" "Run"       npm-run--command)]]
+      ("r" "Run"       npm-run--command)
+      ("t" "Test"       npm-test--command)]]
   (interactive)
   (transient-setup 'npm))
 
