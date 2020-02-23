@@ -95,6 +95,21 @@
 
 (defun npm-update--get-packages (project-dir)
   "Function to parse package.json in the PROJECT-DIR to find npm packages."
+  (append
+   (npm-update--get-dev-dependency-packages project-dir)
+   (npm-update--get-optional-dependency-packages project-dir)
+   (npm-update--get-dependency-packages project-dir)))
+
+(defun npm-update--get-dev-dependency-packages(project-dir)
+  "Function to parse package.json in the PROJECT-DIR to find npm devDependencies."
+  (cdr (assoc 'devDependencies (json-read-file (concat project-dir package-json-file)))))
+
+(defun npm-update--get-optional-dependency-packages(project-dir)
+  "Function to parse package.json in the PROJECT-DIR to find npm optionalDependencies."
+  (cdr (assoc 'optionalDependencies (json-read-file (concat project-dir package-json-file)))))
+
+(defun npm-update--get-dependency-packages(project-dir)
+  "Function to parse package.json in the PROJECT-DIR to find npm dependencies."
   (cdr (assoc 'dependencies (json-read-file (concat project-dir package-json-file)))))
 
 (defun npm-update--choose-package ()
