@@ -115,7 +115,7 @@
 (defun npm-update--choose-package ()
   "Let user choose which package to update."
   (interactive)
-  (completing-read "Select script from list: " (npm-update--get-packages (get-project-dir)) nil t))
+  (completing-read "Select package from list: " (npm-update--get-packages (get-project-dir)) nil t))
 
 (defun npm-update--command (prefix-command &optional args)
   "Invoke the compile mode with the test PREFIX-COMMAND and ARGS if provided."
