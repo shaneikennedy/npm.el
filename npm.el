@@ -69,7 +69,7 @@
   (concat npm-install--prefix-command " " package-name))
 
 (defun npm-install--choose-package ()
-  "Let user choose which script to run."
+  "Let user choose which package to install."
   (interactive)
   (completing-read "Type the name of the package you want to install: " ()))
 
@@ -94,11 +94,11 @@
   (concat npm-update--prefix-command " " package-name))
 
 (defun npm-update--get-packages (project-dir)
-  "Function to parse package.json in the PROJECT-DIR to find npm scripts."
+  "Function to parse package.json in the PROJECT-DIR to find npm packages."
   (cdr (assoc 'dependencies (json-read-file (concat project-dir package-json-file)))))
 
 (defun npm-update--choose-package ()
-  "Let user choose which script to run."
+  "Let user choose which package to update."
   (interactive)
   (completing-read "Select script from list: " (npm-update--get-packages (get-project-dir)) nil t))
 
