@@ -12,4 +12,4 @@ Clone this repo and add the following to your init.el
 ## Usage
 `M-x npm`
 
-As of right now this package only supports the `npm run, test` and *very basic* `npm install, update` commands but I hope to add more functionality soon. If you have a command you would really like to see added here please open an issue!
+As of right now this package only supports the `npm run, test, install, and update` commands but I hope to add more functionality soon. If you have a command you would really like to see added here please open an issue!

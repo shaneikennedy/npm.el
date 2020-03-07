@@ -32,8 +32,8 @@
   (interactive)
   (completing-read "Select script from list: " (npm-run--get-scripts (get-project-dir)) nil t))
 
-(defun npm-run--command (prefix-command &optional args)
-  "Invoke the compile mode with the test PREFIX-COMMAND and ARGS if provided."
+(defun npm-run--command (&optional args)
+  "Invoke the compile mode with the run prefix-command and ARGS if provided."
   (interactive (list (npm-arguments)))
   (save-excursion
     (let* ((project-root-folder (find-file-noselect (get-project-dir)))
@@ -48,8 +48,8 @@
 ;; NPM TEST
 (defconst npm-test--prefix-command "npm test")
 
-(defun npm-test--command (prefix-command &optional args)
-  "Invoke the compile mode with the test PREFIX-COMMAND and ARGS if provided."
+(defun npm-test--command (&optional args)
+  "Invoke the compile mode with the test prefix-command and ARGS if provided."
   (interactive (list (npm-arguments)))
   (save-excursion
     (let* ((project-root-folder (find-file-noselect (get-project-dir)))
@@ -73,15 +73,16 @@
   (interactive)
   (completing-read "Type the name of the package you want to install: " ()))
 
-(defun npm-install--command (prefix-command &optional args)
-  "Invoke the compile mode with the test PREFIX-COMMAND and ARGS if provided."
-  (interactive (list (npm-arguments)))
+(defun npm-install--command (&optional args)
+  "Invoke the compile mode with the install prefix-command and ARGS if provided."
+  (interactive (list (npm-install-arguments)))
   (save-excursion
     (let* ((project-root-folder (find-file-noselect (get-project-dir)))
-          (command (npm-install--get-install-command (npm-install--choose-package))))
+           (arguments (string-join args " "))
+           (command (npm-install--get-install-command (npm-install--choose-package))))
       (setq compilation-read-command t)
       (set-buffer project-root-folder)
-      (setq compile-command command)
+      (setq compile-command (string-join (list command arguments) " "))
       (call-interactively 'compile)
       (kill-buffer project-root-folder))))
 
@@ -117,8 +118,8 @@
   (interactive)
   (completing-read "Select package from list: " (npm-update--get-packages (get-project-dir)) nil t))
 
-(defun npm-update--command (prefix-command &optional args)
-  "Invoke the compile mode with the test PREFIX-COMMAND and ARGS if provided."
+(defun npm-update--command (&optional args)
+  "Invoke the compile mode with the update prefic-command and ARGS if provided."
   (interactive (list (npm-arguments)))
   (save-excursion
     (let* ((project-root-folder (find-file-noselect (get-project-dir)))
@@ -131,13 +132,29 @@
 
 
 ;; Transient menus
+(define-transient-command npm-install ()
+  "Open npm install transient menu pop up."
+    ["Arguments"
+     ("-n" "Do not save to package.json"        "--no-save")
+     ("-p" "Save as production dependency"        "--save-prod")
+     ("-d" "Save as development dependency"        "--save-dev")
+     ("-d" "Save as optional dependency"        "--save-optional")
+     ("-n" "Do not save to package.json"        "--no-save")]
+    [["Command"
+      ("i" "Install"       npm-install--command)]]
+  (interactive)
+  (transient-setup 'npm-install))
+
+(defun npm-install-arguments nil
+  "Arguments function for transient."
+  (transient-args 'npm-install))
 
 ;; Entrypoint menu
 (define-transient-command npm ()
   "Open npm transient menu pop up."
     [["Command"
       ("u" "Update"       npm-update--command)
-      ("i" "Install"       npm-install--command)
+      ("i" "Install"       npm-install)
       ("r" "Run"       npm-run--command)
       ("t" "Test"       npm-test--command)]]
   (interactive)
