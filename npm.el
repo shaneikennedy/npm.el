@@ -135,10 +135,9 @@
 (define-transient-command npm-install ()
   "Open npm install transient menu pop up."
     ["Arguments"
-     ("-n" "Do not save to package.json"        "--no-save")
      ("-p" "Save as production dependency"        "--save-prod")
      ("-d" "Save as development dependency"        "--save-dev")
-     ("-d" "Save as optional dependency"        "--save-optional")
+     ("-o" "Save as optional dependency"        "--save-optional")
      ("-n" "Do not save to package.json"        "--no-save")]
     [["Command"
       ("i" "Install"       npm-install--command)]]
