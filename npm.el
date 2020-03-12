@@ -23,19 +23,17 @@
 
 ;;; Commentary:
 
-;; An npm client for emacs
-
 ;;; Code:
 (require 'json)
 (require 'compile)
 (require 'transient)
 
-(defconst package-json-file "package.json")
+(defconst npm-config-file "package.json")
 
 ;; Common
-(defun get-project-dir ()
+(defun npm-get-project-dir ()
   "Function that determines the file path of the project root directory."
-  (locate-dominating-file (buffer-file-name) package-json-file))
+  (locate-dominating-file (buffer-file-name) npm-config-file))
 
 
 ;; NPM RUN
@@ -47,19 +45,19 @@
 
 (defun npm-run--get-scripts (project-dir)
   "Function to parse package.json in the PROJECT-DIR to find npm scripts."
-  (cdr (assoc 'scripts (json-read-file (concat project-dir package-json-file)))))
+  (cdr (assoc 'scripts (json-read-file (concat project-dir npm-config-file)))))
 
 
 (defun npm-run--choose-script ()
   "Let user choose which script to run."
   (interactive)
-  (completing-read "Select script from list: " (npm-run--get-scripts (get-project-dir)) nil t))
+  (completing-read "Select script from list: " (npm-run--get-scripts (npm-get-project-dir)) nil t))
 
 (defun npm-run--command (&optional args)
   "Invoke the compile mode with the run prefix-command and ARGS if provided."
   (interactive (list (npm-arguments)))
   (save-excursion
-    (let* ((project-root-folder (find-file-noselect (get-project-dir)))
+    (let* ((project-root-folder (find-file-noselect (npm-get-project-dir)))
           (command (npm-run--get-run-command (npm-run--choose-script))))
       (setq compilation-read-command t)
       (set-buffer project-root-folder)
@@ -75,7 +73,7 @@
   "Invoke the compile mode with the test prefix-command and ARGS if provided."
   (interactive (list (npm-arguments)))
   (save-excursion
-    (let* ((project-root-folder (find-file-noselect (get-project-dir)))
+    (let* ((project-root-folder (find-file-noselect (npm-get-project-dir)))
           (command 'npm-test--prefix-command))
       (setq compilation-read-command t)
       (set-buffer project-root-folder)
@@ -100,7 +98,7 @@
   "Invoke the compile mode with the install prefix-command and ARGS if provided."
   (interactive (list (npm-install-arguments)))
   (save-excursion
-    (let* ((project-root-folder (find-file-noselect (get-project-dir)))
+    (let* ((project-root-folder (find-file-noselect (npm-get-project-dir)))
            (arguments (string-join args " "))
            (command (npm-install--get-install-command (npm-install--choose-package))))
       (setq compilation-read-command t)
@@ -126,26 +124,26 @@
 
 (defun npm-update--get-dev-dependency-packages(project-dir)
   "Function to parse package.json in the PROJECT-DIR to find npm devDependencies."
-  (cdr (assoc 'devDependencies (json-read-file (concat project-dir package-json-file)))))
+  (cdr (assoc 'devDependencies (json-read-file (concat project-dir npm-config-file)))))
 
 (defun npm-update--get-optional-dependency-packages(project-dir)
   "Function to parse package.json in the PROJECT-DIR to find npm optionalDependencies."
-  (cdr (assoc 'optionalDependencies (json-read-file (concat project-dir package-json-file)))))
+  (cdr (assoc 'optionalDependencies (json-read-file (concat project-dir npm-config-file)))))
 
 (defun npm-update--get-dependency-packages(project-dir)
   "Function to parse package.json in the PROJECT-DIR to find npm dependencies."
-  (cdr (assoc 'dependencies (json-read-file (concat project-dir package-json-file)))))
+  (cdr (assoc 'dependencies (json-read-file (concat project-dir npm-config-file)))))
 
 (defun npm-update--choose-package ()
   "Let user choose which package to update."
   (interactive)
-  (completing-read "Select package from list: " (npm-update--get-packages (get-project-dir)) nil t))
+  (completing-read "Select package from list: " (npm-update--get-packages (npm-get-project-dir)) nil t))
 
 (defun npm-update--command (&optional args)
   "Invoke the compile mode with the update prefic-command and ARGS if provided."
   (interactive (list (npm-arguments)))
   (save-excursion
-    (let* ((project-root-folder (find-file-noselect (get-project-dir)))
+    (let* ((project-root-folder (find-file-noselect (npm-get-project-dir)))
           (command (npm-update--get-update-command (npm-update--choose-package))))
       (setq compilation-read-command t)
       (set-buffer project-root-folder)
