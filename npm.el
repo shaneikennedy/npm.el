@@ -156,6 +156,8 @@
 (define-transient-command npm-install ()
   "Open npm install transient menu pop up."
     ["Arguments"
+     ("-f" "Force fetching even if copy exists on disk"        "--force")
+     ("-g" "Save as global dependency"        "--global")
      ("-p" "Save as production dependency"        "--save-prod")
      ("-d" "Save as development dependency"        "--save-dev")
      ("-o" "Save as optional dependency"        "--save-optional")
