@@ -22,10 +22,12 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
+;; This package offers a transient interface to the npm cli.
 
 ;;; Code:
-(require 'json)
 (require 'compile)
+(require 'json)
+(require 'subr-x)
 (require 'transient)
 
 (defconst npm-config-file "package.json")
