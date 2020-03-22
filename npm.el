@@ -64,7 +64,7 @@
       (setq compilation-read-command t)
       (set-buffer project-root-folder)
       (setq compile-command command)
-      (call-interactively 'compile)
+      (call-interactively #'compile)
       (kill-buffer project-root-folder))))
 
 
@@ -80,7 +80,7 @@
       (setq compilation-read-command t)
       (set-buffer project-root-folder)
       (setq compile-command command)
-      (call-interactively 'compile)
+      (call-interactively #'compile)
       (kill-buffer project-root-folder))))
 
 
@@ -106,7 +106,7 @@
       (setq compilation-read-command t)
       (set-buffer project-root-folder)
       (setq compile-command (string-join (list command arguments) " "))
-      (call-interactively 'compile)
+      (call-interactively #'compile)
       (kill-buffer project-root-folder))))
 
 
@@ -150,7 +150,7 @@
       (setq compilation-read-command t)
       (set-buffer project-root-folder)
       (setq compile-command command)
-      (call-interactively 'compile)
+      (call-interactively #'compile)
       (kill-buffer project-root-folder))))
 
 
