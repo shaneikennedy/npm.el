@@ -1,4 +1,4 @@
-;;; npm.el --- Run your npm workflows from inside emacs  -*- lexical-binding: t; -*-
+;;; npm.el --- Run your npm workflows -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2020  Shane Kennedy
 
