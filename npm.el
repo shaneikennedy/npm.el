@@ -53,7 +53,7 @@
   (interactive)
   (completing-read "Select script from list: " (npm-run--get-scripts (npm-get-project-dir)) nil t))
 
-(defun npm-run--command (&optional args)
+(defun npm-run--command (&optional _args)
   "Invoke the compile mode with the run prefix-command and ARGS if provided."
   (interactive (list (npm-arguments)))
   (save-excursion
@@ -69,7 +69,7 @@
 ;; NPM TEST
 (defconst npm-test--prefix-command "npm test")
 
-(defun npm-test--command (&optional args)
+(defun npm-test--command (&optional _args)
   "Invoke the compile mode with the test prefix-command and ARGS if provided."
   (interactive (list (npm-arguments)))
   (save-excursion
@@ -139,7 +139,7 @@
   (interactive)
   (completing-read "Select package from list: " (npm-update--get-packages (npm-get-project-dir)) nil t))
 
-(defun npm-update--command (&optional args)
+(defun npm-update--command (&optional _args)
   "Invoke the compile mode with the update prefic-command and ARGS if provided."
   (interactive (list (npm-arguments)))
   (save-excursion
