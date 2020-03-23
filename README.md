@@ -1,12 +1,16 @@
 # npm.el
+[![MELPA](https://melpa.org/packages/npm-badge.svg)](https://melpa.org/#/npm)
+
 This is an npm client for emacs.
 
 ## Install
-Clone this repo and add the following to your init.el
+This package is available on MELPA
+
+### Using `use-package`
 
 ``` emacs-lisp
-(add-to-list 'load-path "~/path/to/where/you/cloned/this/repo/")
-(load "npm.el")
+(use-package npm
+    :ensure t)
 ```
 
 ## Usage
