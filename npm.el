@@ -164,7 +164,7 @@ This will first check to make sure there is a package.json file and then open th
 
 
 ;; Transient menus
-(define-transient-command npm-install ()
+(define-transient-command npm-install-menu ()
   "Open npm install transient menu pop up."
     ["Arguments"
      ("-f" "Force fetching even if copy exists on disk"        "--force")
@@ -176,18 +176,18 @@ This will first check to make sure there is a package.json file and then open th
     [["Command"
       ("i" "Install"       npm-install--command)]]
   (interactive)
-  (transient-setup 'npm-install))
+  (transient-setup 'npm-install-menu))
 
-(defun npm-install-arguments nil
+(defun npm-install-menu-arguments nil
   "Arguments function for transient."
-  (transient-args 'npm-install))
+  (transient-args 'npm-install-menu))
 
 ;; Entrypoint menu
 (define-transient-command npm-menu ()
   "Open npm transient menu pop up."
     [["Command"
       ("u" "Update"       npm-update--command)
-      ("i" "Install"       npm-install)
+      ("i" "Install"       npm-install-menu)
       ("r" "Run"       npm-run--command)
       ("t" "Test"       npm-test--command)]]
   (interactive)
