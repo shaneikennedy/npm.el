@@ -70,7 +70,7 @@ This will first check to make sure there is a package.json file and then open th
   (save-excursion
     (let* ((project-root-folder (find-file-noselect (npm-get-project-dir)))
           (command (npm-run--get-run-command (npm-run--choose-script))))
-      (setq compilation-read-command t)
+      (setq compilation-read-command nil)
       (set-buffer project-root-folder)
       (setq compile-command command)
       (call-interactively #'compile)
@@ -86,7 +86,7 @@ This will first check to make sure there is a package.json file and then open th
   (save-excursion
     (let* ((project-root-folder (find-file-noselect (npm-get-project-dir)))
           (command 'npm-test--prefix-command))
-      (setq compilation-read-command t)
+      (setq compilation-read-command nil)
       (set-buffer project-root-folder)
       (setq compile-command command)
       (call-interactively #'compile)
@@ -112,7 +112,7 @@ This will first check to make sure there is a package.json file and then open th
     (let* ((project-root-folder (find-file-noselect (npm-get-project-dir)))
            (arguments (string-join args " "))
            (command (npm-install--get-install-command (npm-install--choose-package))))
-      (setq compilation-read-command t)
+      (setq compilation-read-command nil)
       (set-buffer project-root-folder)
       (setq compile-command (string-join (list command arguments) " "))
       (call-interactively #'compile)
@@ -156,7 +156,7 @@ This will first check to make sure there is a package.json file and then open th
   (save-excursion
     (let* ((project-root-folder (find-file-noselect (npm-get-project-dir)))
           (command (npm-update--get-update-command (npm-update--choose-package))))
-      (setq compilation-read-command t)
+      (setq compilation-read-command nil)
       (set-buffer project-root-folder)
       (setq compile-command command)
       (call-interactively #'compile)
