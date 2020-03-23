@@ -31,11 +31,20 @@
 (require 'transient)
 
 (defconst npm-config-file "package.json")
+(defconst npm-no-package-json-error "Could not find package.json. You must already be in an npm-initialized project to use this command.")
 
 ;; Common
 (defun npm-get-project-dir ()
   "Function that determines the file path of the project root directory."
   (locate-dominating-file (buffer-file-name) npm-config-file))
+
+(defun npm ()
+  "Entrypoint function to the package.
+This will first check to make sure there is a package.json file and then open the menu."
+  (interactive)
+  (if (npm-get-project-dir)
+      (npm-menu)
+      (message npm-no-package-json-error)))
 
 
 ;; NPM RUN
@@ -142,7 +151,7 @@
   (completing-read "Select package from list: " (npm-update--get-packages (npm-get-project-dir)) nil t))
 
 (defun npm-update--command (&optional _args)
-  "Invoke the compile mode with the update prefic-command and ARGS if provided."
+  "Invoke the compile mode with the update prefix-command and ARGS if provided."
   (interactive (list (npm-arguments)))
   (save-excursion
     (let* ((project-root-folder (find-file-noselect (npm-get-project-dir)))
@@ -174,7 +183,7 @@
   (transient-args 'npm-install))
 
 ;; Entrypoint menu
-(define-transient-command npm ()
+(define-transient-command npm-menu ()
   "Open npm transient menu pop up."
     [["Command"
       ("u" "Update"       npm-update--command)
@@ -182,11 +191,11 @@
       ("r" "Run"       npm-run--command)
       ("t" "Test"       npm-test--command)]]
   (interactive)
-  (transient-setup 'npm))
+  (transient-setup 'npm-menu))
 
 (defun npm-arguments nil
   "Arguments function for transient."
-  (transient-args 'npm))
+  (transient-args 'npm-menu))
 
 (provide 'npm)
 ;;; npm.el ends here
