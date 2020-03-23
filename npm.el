@@ -31,7 +31,6 @@
 (require 'transient)
 
 (defconst npm-config-file "package.json")
-(defconst npm-no-package-json-error "Could not find package.json. You must already be in an npm-initialized project to use this command.")
 
 ;; Common
 (defun npm-get-project-dir ()
@@ -43,8 +42,9 @@
 This will first check to make sure there is a package.json file and then open the menu."
   (interactive)
   (if (npm-get-project-dir)
-      (npm-menu)
-      (message npm-no-package-json-error)))
+      (call-interactively #'npm-menu)
+      (if (y-or-n-p "You are not in an NPM project, would you like to initialize one? ")
+          (call-interactively #'npm-init))))
 
 
 ;; NPM RUN
@@ -161,6 +161,25 @@ This will first check to make sure there is a package.json file and then open th
       (setq compile-command command)
       (call-interactively #'compile)
       (kill-buffer project-root-folder))))
+
+
+;; NPM INIT
+(defconst npm-init--prefix-command "npm init")
+(defconst npm-init--temp-buffer ".npminit")
+
+(defun npm-init ()
+  "Initialize a project folder as a npm project."
+   (interactive)
+   (save-excursion
+     (let* ((project-root-folder (read-directory-name "Project root :"))
+            (command npm-init--prefix-command))
+      (generate-new-buffer (concat project-root-folder npm-init--temp-buffer))
+      (set-buffer (concat project-root-folder npm-init--temp-buffer))
+      (let ((current-prefix-arg '(4)))
+        (setq compilation-read-command nil)
+        (setq compile-command command)
+        (call-interactively #'compile))
+        (kill-buffer project-root-folder))))
 
 
 ;; Transient menus
