@@ -37,13 +37,13 @@
   "Function that determines the file path of the project root directory."
   (locate-dominating-file (buffer-file-name) npm-config-file))
 
-(defun npm-compile (npm-command &optional _args)
-  "Generic compile command for NPM-COMMAND functionality."
+(defun npm-compile (npm-command &optional args)
+  "Generic compile command for NPM-COMMAND with ARGS functionality."
    (save-excursion
     (let* ((project-root-folder (find-file-noselect (npm-get-project-dir))))
       (setq compilation-read-command nil)
       (set-buffer project-root-folder)
-      (setq compile-command (string-join (list npm-command _args) " "))
+      (setq compile-command (string-join (list npm-command args) " "))
       (call-interactively #'compile)
       (kill-buffer project-root-folder))))
 
