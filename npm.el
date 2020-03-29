@@ -43,7 +43,7 @@
     (let* ((project-root-folder (find-file-noselect (npm-get-project-dir))))
       (setq compilation-read-command nil)
       (set-buffer project-root-folder)
-      (setq compile-command npm-command)
+      (setq compile-command (string-join (list npm-command _args) " "))
       (call-interactively #'compile)
       (kill-buffer project-root-folder))))
 
