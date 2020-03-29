@@ -74,7 +74,7 @@ This will first check to make sure there is a package.json file and then open th
   (interactive)
   (completing-read "Select script from list: " (npm-run--get-scripts (npm-get-project-dir)) nil t))
 
-(defun npm-run--command (&optional _args)
+(defun npm-run (&optional _args)
   "Invoke the compile mode with the run prefix-command and ARGS if provided."
   (interactive (list (npm-arguments)))
   (npm-compile (npm-run--get-run-command (npm-run--choose-script))))
@@ -83,7 +83,7 @@ This will first check to make sure there is a package.json file and then open th
 ;; NPM TEST
 (defconst npm-test--prefix-command "npm test")
 
-(defun npm-test--command (&optional _args)
+(defun npm-test (&optional _args)
   "Invoke the compile mode with the test prefix-command and ARGS if provided."
   (interactive (list (npm-arguments)))
   (npm-compile 'npm-test--prefix-command))
@@ -138,7 +138,7 @@ This will first check to make sure there is a package.json file and then open th
   (interactive)
   (completing-read "Select package from list: " (npm-update--get-packages (npm-get-project-dir)) nil t))
 
-(defun npm-update--command (&optional _args)
+(defun npm-update (&optional _args)
   "Invoke the compile mode with the update prefix-command and ARGS if provided."
   (interactive (list (npm-arguments)))
   (npm-compile (npm-update--get-update-command (npm-update--choose-package))))
@@ -186,10 +186,10 @@ This will first check to make sure there is a package.json file and then open th
 (define-transient-command npm-menu ()
   "Open npm transient menu pop up."
     [["Command"
-      ("u" "Update"       npm-update--command)
+      ("u" "Update"       npm-update)
       ("i" "Install"       npm-install-menu)
-      ("r" "Run"       npm-run--command)
-      ("t" "Test"       npm-test--command)]]
+      ("r" "Run"       npm-run)
+      ("t" "Test"       npm-test)]]
   (interactive)
   (transient-setup 'npm-menu))
 
