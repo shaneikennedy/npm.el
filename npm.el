@@ -37,6 +37,16 @@
   "Function that determines the file path of the project root directory."
   (locate-dominating-file (buffer-file-name) npm-config-file))
 
+(defun npm-compile (npm-command &optional _args)
+  "Generic compile command for NPM-COMMAND functionality."
+   (save-excursion
+    (let* ((project-root-folder (find-file-noselect (npm-get-project-dir))))
+      (setq compilation-read-command nil)
+      (set-buffer project-root-folder)
+      (setq compile-command npm-command)
+      (call-interactively #'compile)
+      (kill-buffer project-root-folder))))
+
 (defun npm ()
   "Entrypoint function to the package.
 This will first check to make sure there is a package.json file and then open the menu."
@@ -64,34 +74,19 @@ This will first check to make sure there is a package.json file and then open th
   (interactive)
   (completing-read "Select script from list: " (npm-run--get-scripts (npm-get-project-dir)) nil t))
 
-(defun npm-run--command (&optional _args)
+(defun npm-run (&optional _args)
   "Invoke the compile mode with the run prefix-command and ARGS if provided."
   (interactive (list (npm-arguments)))
-  (save-excursion
-    (let* ((project-root-folder (find-file-noselect (npm-get-project-dir)))
-          (command (npm-run--get-run-command (npm-run--choose-script))))
-      (setq compilation-read-command nil)
-      (set-buffer project-root-folder)
-      (setq compile-command command)
-      (call-interactively #'compile)
-      (kill-buffer project-root-folder))))
+  (npm-compile (npm-run--get-run-command (npm-run--choose-script))))
 
 
 ;; NPM TEST
 (defconst npm-test--prefix-command "npm test")
 
-(defun npm-test--command (&optional _args)
+(defun npm-test (&optional _args)
   "Invoke the compile mode with the test prefix-command and ARGS if provided."
   (interactive (list (npm-arguments)))
-  (save-excursion
-    (let* ((project-root-folder (find-file-noselect (npm-get-project-dir)))
-          (command 'npm-test--prefix-command))
-      (setq compilation-read-command nil)
-      (set-buffer project-root-folder)
-      (setq compile-command command)
-      (call-interactively #'compile)
-      (kill-buffer project-root-folder))))
-
+  (npm-compile 'npm-test--prefix-command))
 
 ;; NPM INSTALL
 (defconst npm-install--prefix-command "npm install")
@@ -107,17 +102,10 @@ This will first check to make sure there is a package.json file and then open th
 
 (defun npm-install--command (&optional args)
   "Invoke the compile mode with the install prefix-command and ARGS if provided."
-  (interactive (list (npm-install-arguments)))
-  (save-excursion
-    (let* ((project-root-folder (find-file-noselect (npm-get-project-dir)))
-           (arguments (string-join args " "))
-           (command (npm-install--get-install-command (npm-install--choose-package))))
-      (setq compilation-read-command nil)
-      (set-buffer project-root-folder)
-      (setq compile-command (string-join (list command arguments) " "))
-      (call-interactively #'compile)
-      (kill-buffer project-root-folder))))
-
+  (interactive (list (npm-install-menu-arguments)))
+  (let* ((arguments (string-join args " "))
+         (npm-command (npm-install--get-install-command (npm-install--choose-package))))
+    (npm-compile npm-command arguments)))
 
 ;; NPM UPDATE
 (defconst npm-update--prefix-command "npm update")
@@ -150,17 +138,10 @@ This will first check to make sure there is a package.json file and then open th
   (interactive)
   (completing-read "Select package from list: " (npm-update--get-packages (npm-get-project-dir)) nil t))
 
-(defun npm-update--command (&optional _args)
+(defun npm-update (&optional _args)
   "Invoke the compile mode with the update prefix-command and ARGS if provided."
   (interactive (list (npm-arguments)))
-  (save-excursion
-    (let* ((project-root-folder (find-file-noselect (npm-get-project-dir)))
-          (command (npm-update--get-update-command (npm-update--choose-package))))
-      (setq compilation-read-command nil)
-      (set-buffer project-root-folder)
-      (setq compile-command command)
-      (call-interactively #'compile)
-      (kill-buffer project-root-folder))))
+  (npm-compile (npm-update--get-update-command (npm-update--choose-package))))
 
 
 ;; NPM INIT
@@ -205,10 +186,10 @@ This will first check to make sure there is a package.json file and then open th
 (define-transient-command npm-menu ()
   "Open npm transient menu pop up."
     [["Command"
-      ("u" "Update"       npm-update--command)
+      ("u" "Update"       npm-update)
       ("i" "Install"       npm-install-menu)
-      ("r" "Run"       npm-run--command)
-      ("t" "Test"       npm-test--command)]]
+      ("r" "Run"       npm-run)
+      ("t" "Test"       npm-test)]]
   (interactive)
   (transient-setup 'npm-menu))
 
