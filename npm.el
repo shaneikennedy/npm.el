@@ -37,15 +37,20 @@
   "Function that determines the file path of the project root directory."
   (locate-dominating-file (buffer-file-name) npm-config-file))
 
+(defconst npm-mode-map compilation-mode-map)
+
+(define-derived-mode npm-mode compilation-mode "NPM"
+  "Major mode for the NPM compilation buffer."
+  (use-local-map npm-mode-map)
+  (setq major-mode 'npm-mode)
+  (setq mode-name "NPM")
+  (setq-local truncate-lines t))
+
 (defun npm-compile (npm-command &optional args)
   "Generic compile command for NPM-COMMAND with ARGS functionality."
-   (save-excursion
-    (let* ((project-root-folder (find-file-noselect (npm-get-project-dir))))
-      (setq compilation-read-command nil)
-      (set-buffer project-root-folder)
-      (setq compile-command (string-join (list npm-command args) " "))
-      (call-interactively #'compile)
-      (kill-buffer project-root-folder))))
+  (let ((buffer-name "*npm*"))
+    (compilation-start (string-join (list npm-command args) " ") 'npm-mode)
+    (with-current-buffer "*npm*" (rename-buffer buffer-name))))
 
 (defun npm ()
   "Entrypoint function to the package.
