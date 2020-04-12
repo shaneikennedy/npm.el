@@ -19,7 +19,11 @@ This package is available on MELPA
 ## Usage
 `M-x npm`
 
-![Startup screen for npm](assets/npm-startup.png "NPM startup")
-![Install screen for npm](assets/npm-install.png "NPM install")
+|![Startup screen for npm](assets/npm-startup.png "NPM startup")        | ![Run screen for npm](assets/npm-run.png "NPM run") |
+:----------------------------------------------------------------------:|:-------------:
+![Install screen for npm](assets/npm-install.png "NPM install")         | ![Update screen for npm](assets/npm-update.png "NPM update")
+
+
+
 
 As of right now this package only supports the `npm run, test, install, and update` commands but I hope to add more functionality soon. If you have a command you would really like to see added here please open an issue!
