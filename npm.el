@@ -29,11 +29,13 @@
 (require 'json)
 (require 'subr-x)
 (require 'transient)
+
 (require 'npm-common)
 (require 'npm-run)
 (require 'npm-test)
 (require 'npm-install)
 (require 'npm-update)
+(require 'npm-init)
 
 (defun npm ()
   "Entrypoint function to the package.
@@ -52,24 +54,6 @@ This will first check to make sure there is a package.json file and then open th
   (setq major-mode 'npm-mode)
   (setq mode-name "NPM")
   (setq-local truncate-lines t))
-
-;; NPM INIT
-(defconst npm-init--prefix-command "npm init")
-(defconst npm-init--temp-buffer ".npminit")
-
-(defun npm-init ()
-  "Initialize a project folder as a npm project."
-   (interactive)
-   (save-excursion
-     (let* ((project-root-folder (read-directory-name "Project root :"))
-            (command npm-init--prefix-command))
-      (generate-new-buffer (concat project-root-folder npm-init--temp-buffer))
-      (set-buffer (concat project-root-folder npm-init--temp-buffer))
-      (let ((current-prefix-arg '(4)))
-        (setq compilation-read-command nil)
-        (setq compile-command command)
-        (call-interactively #'compile))
-        (kill-buffer project-root-folder))))
 
 ;; Entrypoint menu
 (define-transient-command npm-menu ()
