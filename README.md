@@ -1,5 +1,7 @@
 # npm.el
 [![MELPA](https://melpa.org/packages/npm-badge.svg)](https://melpa.org/#/npm)
+[![Actions Status](https://github.com/shaneikennedy/npm.el/workflows/check/badge.svg)](https://github.com/shaneikennedy/npm.el/actions)
+
 
 This is an npm client for emacs.
 

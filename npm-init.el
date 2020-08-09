@@ -4,7 +4,6 @@
 
 ;; Author: Shane Kennedy
 ;; Homepage: https://github.com/shaneikennedy/npm.el
-;; Package-Requires: ((emacs "25.1") (transient "0.1.0"))
 ;; Keywords: tools
 ;; Version: 0
 
@@ -22,6 +21,7 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
+;; Functions for initializing a node project.
 
 ;;; Code:
 (require 'npm-common)

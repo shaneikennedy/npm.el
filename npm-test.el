@@ -4,7 +4,6 @@
 
 ;; Author: Shane Kennedy
 ;; Homepage: https://github.com/shaneikennedy/npm.el
-;; Package-Requires: ((emacs "25.1") (transient "0.1.0"))
 ;; Keywords: tools
 ;; Version: 0
 
@@ -22,6 +21,7 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
+;; Functions for running the npm test script.
 
 ;;; Code:
 (require 'npm-common)
@@ -30,8 +30,8 @@
 
 (defun npm-test (&optional _args)
   "Invoke the compile mode with the test prefix-command and ARGS if provided."
-  (interactive (list (npm-arguments)))
-  (npm-compile npm-test--prefix-command))
+  (interactive (list (npm-common--arguments)))
+  (npm-common--compile npm-test--prefix-command))
 
 (provide 'npm-test)
 ;;; npm-test.el ends here

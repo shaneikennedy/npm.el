@@ -4,7 +4,6 @@
 
 ;; Author: Shane Kennedy
 ;; Homepage: https://github.com/shaneikennedy/npm.el
-;; Package-Requires: ((emacs "25.1") (transient "0.1.0"))
 ;; Keywords: tools
 ;; Version: 0
 
@@ -22,6 +21,7 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
+;; Functions for installing npm pakcages.
 
 ;;; Code:
 (require 'npm-common)
@@ -62,7 +62,7 @@
   (interactive (list (npm-install-menu-arguments)))
   (let* ((arguments (string-join args " "))
          (npm-command (npm-install--get-install-command (npm-install--choose-package))))
-    (npm-compile npm-command arguments)))
+    (npm-common--compile npm-command arguments)))
 
 (provide 'npm-install)
 ;;; npm-install.el ends here

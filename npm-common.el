@@ -4,7 +4,6 @@
 
 ;; Author: Shane Kennedy
 ;; Homepage: https://github.com/shaneikennedy/npm.el
-;; Package-Requires: ((emacs "25.1") (transient "0.1.0"))
 ;; Keywords: tools
 ;; Version: 0
 
@@ -22,6 +21,7 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
+;; The common functions needed by many or all npm commands.
 
 ;;; Code:
 (require 'compile)
@@ -29,20 +29,20 @@
 (require 'subr-x)
 (require 'transient)
 
-(defconst npm-config-file "package.json")
+(defconst npm-common--config-file "package.json")
 
 ;; Common
-(defun npm-get-project-dir ()
+(defun npm-common--get-project-dir ()
   "Function that determines the file path of the project root directory."
-  (locate-dominating-file (buffer-file-name) npm-config-file))
+  (locate-dominating-file (buffer-file-name) npm-common--config-file))
 
-(defun npm-compile (npm-command &optional args)
+(defun npm-common--compile (npm-command &optional args)
   "Generic compile command for NPM-COMMAND with ARGS functionality."
   (let ((buffer-name "*npm*"))
     (compilation-start (string-join (list npm-command args) " ") 'npm-mode)
     (with-current-buffer "*npm*" (rename-buffer buffer-name))))
 
-(defun npm-arguments nil
+(defun npm-common--arguments nil
   "Arguments function for transient."
   (transient-args 'npm-menu))
 
