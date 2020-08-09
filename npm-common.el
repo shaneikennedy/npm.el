@@ -22,6 +22,7 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
+;; The common functions needed by many or all npm commands.
 
 ;;; Code:
 (require 'compile)

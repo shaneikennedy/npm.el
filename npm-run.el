@@ -22,6 +22,7 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
+;; Functions for using npm run.
 
 ;;; Code:
 (require 'npm-common)
