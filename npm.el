@@ -32,24 +32,16 @@
 (require 'npm-update)
 (require 'npm-init)
 
-(defun npm ()
-  "Entrypoint function to the package.
-This will first check to make sure there is a package.json file and then open the menu."
-  (interactive)
-  (if (npm-common--get-project-dir)
-      (call-interactively #'npm-menu)
-      (if (y-or-n-p "You are not in an NPM project, would you like to initialize one? ")
-          (call-interactively #'npm-init))))
-
-(defconst npm-mode-map compilation-mode-map)
-
 (defvar npm-test-library "jest"
        "Variable for configuring NPM test command.
 'jest' will use the jest.el package while anything else will
 default to the test script in package.json.")
 
+(defconst npm-mode-map compilation-mode-map)
+
 (defun npm-test-command ()
     "Function for determining NPM test command to use."
+    (interactive)
     (if (string-equal npm-test-library "jest")
         (jest-popup)
         (npm-common--compile (npm-run--get-run-command "test"))))
@@ -73,6 +65,16 @@ default to the test script in package.json.")
       ("t" "Test"       npm-test-command)]]
   (interactive)
   (transient-setup 'npm-menu))
+
+
+(defun npm ()
+  "Entrypoint function to the package.
+This will first check to make sure there is a package.json file and then open the menu."
+  (interactive)
+  (if (npm-common--get-project-dir)
+      (call-interactively #'npm-menu)
+      (if (y-or-n-p "You are not in an NPM project, would you like to initialize one? ")
+          (call-interactively #'npm-init))))
 
 (provide 'npm)
 ;;; npm.el ends here
