@@ -32,6 +32,7 @@
 (require 'npm-common)
 (require 'npm-run)
 (require 'npm-test)
+(require 'npm-install)
 
 (defun npm ()
   "Entrypoint function to the package.
@@ -50,25 +51,6 @@ This will first check to make sure there is a package.json file and then open th
   (setq major-mode 'npm-mode)
   (setq mode-name "NPM")
   (setq-local truncate-lines t))
-
-;; NPM INSTALL
-(defconst npm-install--prefix-command "npm install")
-
-(defun npm-install--get-install-command (package-name)
-  "Construct the shell command for a given PACKAGE-NAME."
-  (concat npm-install--prefix-command " " package-name))
-
-(defun npm-install--choose-package ()
-  "Let user choose which package to install."
-  (interactive)
-  (completing-read "Type the name of the package you want to install: " ()))
-
-(defun npm-install--command (&optional args)
-  "Invoke the compile mode with the install prefix-command and ARGS if provided."
-  (interactive (list (npm-install-menu-arguments)))
-  (let* ((arguments (string-join args " "))
-         (npm-command (npm-install--get-install-command (npm-install--choose-package))))
-    (npm-compile npm-command arguments)))
 
 ;; NPM UPDATE
 (defconst npm-update--prefix-command "npm update")
@@ -124,26 +106,6 @@ This will first check to make sure there is a package.json file and then open th
         (setq compile-command command)
         (call-interactively #'compile))
         (kill-buffer project-root-folder))))
-
-
-;; Transient menus
-(define-transient-command npm-install-menu ()
-  "Open npm install transient menu pop up."
-    ["Arguments"
-     ("-f" "Force fetching even if copy exists on disk"        "--force")
-     ("-g" "Save as global dependency"        "--global")
-     ("-p" "Save as production dependency"        "--save-prod")
-     ("-d" "Save as development dependency"        "--save-dev")
-     ("-o" "Save as optional dependency"        "--save-optional")
-     ("-n" "Do not save to package.json"        "--no-save")]
-    [["Command"
-      ("i" "Install"       npm-install--command)]]
-  (interactive)
-  (transient-setup 'npm-install-menu))
-
-(defun npm-install-menu-arguments nil
-  "Arguments function for transient."
-  (transient-args 'npm-install-menu))
 
 ;; Entrypoint menu
 (define-transient-command npm-menu ()
