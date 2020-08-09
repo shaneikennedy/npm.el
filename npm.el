@@ -4,7 +4,7 @@
 
 ;; Author: Shane Kennedy
 ;; Homepage: https://github.com/shaneikennedy/npm.el
-;; Package-Requires: ((emacs "25.1") (transient "0.1.0"))
+;; Package-Requires: ((emacs "25.1") (transient "0.1.0") (jest "20200625"))
 ;; Keywords: tools
 ;; Version: 0
 
@@ -25,8 +25,9 @@
 ;; This package offers a transient interface to the npm cli.
 
 ;;; Code:
+(require 'jest)
+
 (require 'npm-run)
-(require 'npm-test)
 (require 'npm-install)
 (require 'npm-update)
 (require 'npm-init)
@@ -42,6 +43,19 @@ This will first check to make sure there is a package.json file and then open th
 
 (defconst npm-mode-map compilation-mode-map)
 
+(defvar npm-test-library "jest"
+       "Variable for configuring NPM test command.
+'jest' will use the jest.el package while anything else will
+default to the test script in package.json.")
+
+(defun npm-test-command ()
+    "Function for determining NPM test command to use."
+    (if (string-equal npm-test-library "jest")
+        (jest-popup)
+        (npm-common--compile (npm-run--get-run-command "test"))))
+
+
+
 (define-derived-mode npm-mode compilation-mode "NPM"
   "Major mode for the NPM compilation buffer."
   (use-local-map npm-mode-map)
@@ -56,7 +70,7 @@ This will first check to make sure there is a package.json file and then open th
       ("u" "Update"       npm-update)
       ("i" "Install"       npm-install-menu)
       ("r" "Run"       npm-run)
-      ("t" "Test"       npm-test)]]
+      ("t" "Test"       npm-test-command)]]
   (interactive)
   (transient-setup 'npm-menu))
 
