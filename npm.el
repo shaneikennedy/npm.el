@@ -29,28 +29,7 @@
 (require 'json)
 (require 'subr-x)
 (require 'transient)
-
-(defconst npm-config-file "package.json")
-
-;; Common
-(defun npm-get-project-dir ()
-  "Function that determines the file path of the project root directory."
-  (locate-dominating-file (buffer-file-name) npm-config-file))
-
-(defconst npm-mode-map compilation-mode-map)
-
-(define-derived-mode npm-mode compilation-mode "NPM"
-  "Major mode for the NPM compilation buffer."
-  (use-local-map npm-mode-map)
-  (setq major-mode 'npm-mode)
-  (setq mode-name "NPM")
-  (setq-local truncate-lines t))
-
-(defun npm-compile (npm-command &optional args)
-  "Generic compile command for NPM-COMMAND with ARGS functionality."
-  (let ((buffer-name "*npm*"))
-    (compilation-start (string-join (list npm-command args) " ") 'npm-mode)
-    (with-current-buffer "*npm*" (rename-buffer buffer-name))))
+(require 'npm-common)
 
 (defun npm ()
   "Entrypoint function to the package.
@@ -61,6 +40,14 @@ This will first check to make sure there is a package.json file and then open th
       (if (y-or-n-p "You are not in an NPM project, would you like to initialize one? ")
           (call-interactively #'npm-init))))
 
+(defconst npm-mode-map compilation-mode-map)
+
+(define-derived-mode npm-mode compilation-mode "NPM"
+  "Major mode for the NPM compilation buffer."
+  (use-local-map npm-mode-map)
+  (setq major-mode 'npm-mode)
+  (setq mode-name "NPM")
+  (setq-local truncate-lines t))
 
 ;; NPM RUN
 (defconst npm-run--prefix-command "npm run")
@@ -197,10 +184,6 @@ This will first check to make sure there is a package.json file and then open th
       ("t" "Test"       npm-test)]]
   (interactive)
   (transient-setup 'npm-menu))
-
-(defun npm-arguments nil
-  "Arguments function for transient."
-  (transient-args 'npm-menu))
 
 (provide 'npm)
 ;;; npm.el ends here
