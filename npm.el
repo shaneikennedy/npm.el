@@ -30,6 +30,7 @@
 (require 'subr-x)
 (require 'transient)
 (require 'npm-common)
+(require 'npm-run)
 
 (defun npm ()
   "Entrypoint function to the package.
@@ -48,29 +49,6 @@ This will first check to make sure there is a package.json file and then open th
   (setq major-mode 'npm-mode)
   (setq mode-name "NPM")
   (setq-local truncate-lines t))
-
-;; NPM RUN
-(defconst npm-run--prefix-command "npm run")
-
-(defun npm-run--get-run-command (script-name)
-  "Construct the shell command for a given SCRIPT-NAME."
-  (concat npm-run--prefix-command " " script-name))
-
-(defun npm-run--get-scripts (project-dir)
-  "Function to parse package.json in the PROJECT-DIR to find npm scripts."
-  (cdr (assoc 'scripts (json-read-file (concat project-dir npm-config-file)))))
-
-
-(defun npm-run--choose-script ()
-  "Let user choose which script to run."
-  (interactive)
-  (completing-read "Select script from list: " (npm-run--get-scripts (npm-get-project-dir)) nil t))
-
-(defun npm-run (&optional _args)
-  "Invoke the compile mode with the run prefix-command and ARGS if provided."
-  (interactive (list (npm-arguments)))
-  (npm-compile (npm-run--get-run-command (npm-run--choose-script))))
-
 
 ;; NPM TEST
 (defconst npm-test--prefix-command "npm test")
