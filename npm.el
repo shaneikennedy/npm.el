@@ -33,6 +33,7 @@
 (require 'npm-run)
 (require 'npm-test)
 (require 'npm-install)
+(require 'npm-update)
 
 (defun npm ()
   "Entrypoint function to the package.
@@ -51,43 +52,6 @@ This will first check to make sure there is a package.json file and then open th
   (setq major-mode 'npm-mode)
   (setq mode-name "NPM")
   (setq-local truncate-lines t))
-
-;; NPM UPDATE
-(defconst npm-update--prefix-command "npm update")
-
-(defun npm-update--get-update-command (package-name)
-  "Construct the shell command for a given PACKAGE-NAME."
-  (concat npm-update--prefix-command " " package-name))
-
-(defun npm-update--get-packages (project-dir)
-  "Function to parse package.json in the PROJECT-DIR to find npm packages."
-  (append
-   (npm-update--get-dev-dependency-packages project-dir)
-   (npm-update--get-optional-dependency-packages project-dir)
-   (npm-update--get-dependency-packages project-dir)))
-
-(defun npm-update--get-dev-dependency-packages(project-dir)
-  "Function to parse package.json in the PROJECT-DIR to find npm devDependencies."
-  (cdr (assoc 'devDependencies (json-read-file (concat project-dir npm-config-file)))))
-
-(defun npm-update--get-optional-dependency-packages(project-dir)
-  "Function to parse package.json in the PROJECT-DIR to find npm optionalDependencies."
-  (cdr (assoc 'optionalDependencies (json-read-file (concat project-dir npm-config-file)))))
-
-(defun npm-update--get-dependency-packages(project-dir)
-  "Function to parse package.json in the PROJECT-DIR to find npm dependencies."
-  (cdr (assoc 'dependencies (json-read-file (concat project-dir npm-config-file)))))
-
-(defun npm-update--choose-package ()
-  "Let user choose which package to update."
-  (interactive)
-  (completing-read "Select package from list: " (npm-update--get-packages (npm-get-project-dir)) nil t))
-
-(defun npm-update (&optional _args)
-  "Invoke the compile mode with the update prefix-command and ARGS if provided."
-  (interactive (list (npm-arguments)))
-  (npm-compile (npm-update--get-update-command (npm-update--choose-package))))
-
 
 ;; NPM INIT
 (defconst npm-init--prefix-command "npm init")
