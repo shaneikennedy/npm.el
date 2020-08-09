@@ -31,6 +31,7 @@
 (require 'transient)
 (require 'npm-common)
 (require 'npm-run)
+(require 'npm-test)
 
 (defun npm ()
   "Entrypoint function to the package.
@@ -49,14 +50,6 @@ This will first check to make sure there is a package.json file and then open th
   (setq major-mode 'npm-mode)
   (setq mode-name "NPM")
   (setq-local truncate-lines t))
-
-;; NPM TEST
-(defconst npm-test--prefix-command "npm test")
-
-(defun npm-test (&optional _args)
-  "Invoke the compile mode with the test prefix-command and ARGS if provided."
-  (interactive (list (npm-arguments)))
-  (npm-compile npm-test--prefix-command))
 
 ;; NPM INSTALL
 (defconst npm-install--prefix-command "npm install")
