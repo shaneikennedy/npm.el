@@ -1,4 +1,4 @@
-;;; npm-run.el --- Run your npm workflows -*- lexical-binding: t; -*-
+;;; npm-test.el --- Run your npm workflows -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2020  Shane Kennedy
 
@@ -26,7 +26,6 @@
 ;;; Code:
 (require 'npm-common)
 
-;; NPM TEST
 (defconst npm-test--prefix-command "npm test")
 
 (defun npm-test (&optional _args)
