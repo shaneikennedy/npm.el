@@ -29,20 +29,20 @@
 (require 'subr-x)
 (require 'transient)
 
-(defconst npm-config-file "package.json")
+(defconst npm-common--config-file "package.json")
 
 ;; Common
-(defun npm-get-project-dir ()
+(defun npm-common--get-project-dir ()
   "Function that determines the file path of the project root directory."
-  (locate-dominating-file (buffer-file-name) npm-config-file))
+  (locate-dominating-file (buffer-file-name) npm-common--config-file))
 
-(defun npm-compile (npm-command &optional args)
+(defun npm-common--compile (npm-command &optional args)
   "Generic compile command for NPM-COMMAND with ARGS functionality."
   (let ((buffer-name "*npm*"))
     (compilation-start (string-join (list npm-command args) " ") 'npm-mode)
     (with-current-buffer "*npm*" (rename-buffer buffer-name))))
 
-(defun npm-arguments nil
+(defun npm-common--arguments nil
   "Arguments function for transient."
   (transient-args 'npm-menu))
 

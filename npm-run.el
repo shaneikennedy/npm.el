@@ -34,18 +34,18 @@
 
 (defun npm-run--get-scripts (project-dir)
   "Function to parse package.json in the PROJECT-DIR to find npm scripts."
-  (cdr (assoc 'scripts (json-read-file (concat project-dir npm-config-file)))))
+  (cdr (assoc 'scripts (json-read-file (concat project-dir npm-common--config-file)))))
 
 
 (defun npm-run--choose-script ()
   "Let user choose which script to run."
   (interactive)
-  (completing-read "Select script from list: " (npm-run--get-scripts (npm-get-project-dir)) nil t))
+  (completing-read "Select script from list: " (npm-run--get-scripts (npm-common--get-project-dir)) nil t))
 
 (defun npm-run (&optional _args)
   "Invoke the compile mode with the run prefix-command and ARGS if provided."
-  (interactive (list (npm-arguments)))
-  (npm-compile (npm-run--get-run-command (npm-run--choose-script))))
+  (interactive (list (npm-common--arguments)))
+  (npm-common--compile (npm-run--get-run-command (npm-run--choose-script))))
 
 (provide 'npm-run)
 ;;; npm-run.el ends here

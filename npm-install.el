@@ -62,7 +62,7 @@
   (interactive (list (npm-install-menu-arguments)))
   (let* ((arguments (string-join args " "))
          (npm-command (npm-install--get-install-command (npm-install--choose-package))))
-    (npm-compile npm-command arguments)))
+    (npm-common--compile npm-command arguments)))
 
 (provide 'npm-install)
 ;;; npm-install.el ends here

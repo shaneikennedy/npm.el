@@ -35,7 +35,7 @@
   "Entrypoint function to the package.
 This will first check to make sure there is a package.json file and then open the menu."
   (interactive)
-  (if (npm-get-project-dir)
+  (if (npm-common--get-project-dir)
       (call-interactively #'npm-menu)
       (if (y-or-n-p "You are not in an NPM project, would you like to initialize one? ")
           (call-interactively #'npm-init))))

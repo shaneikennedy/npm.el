@@ -30,8 +30,8 @@
 
 (defun npm-test (&optional _args)
   "Invoke the compile mode with the test prefix-command and ARGS if provided."
-  (interactive (list (npm-arguments)))
-  (npm-compile npm-test--prefix-command))
+  (interactive (list (npm-common--arguments)))
+  (npm-common--compile npm-test--prefix-command))
 
 (provide 'npm-test)
 ;;; npm-test.el ends here

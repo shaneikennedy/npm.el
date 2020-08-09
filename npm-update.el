@@ -41,25 +41,25 @@
 
 (defun npm-update--get-dev-dependency-packages(project-dir)
   "Function to parse package.json in the PROJECT-DIR to find npm devDependencies."
-  (cdr (assoc 'devDependencies (json-read-file (concat project-dir npm-config-file)))))
+  (cdr (assoc 'devDependencies (json-read-file (concat project-dir npm-common--config-file)))))
 
 (defun npm-update--get-optional-dependency-packages(project-dir)
   "Function to parse package.json in the PROJECT-DIR to find npm optionalDependencies."
-  (cdr (assoc 'optionalDependencies (json-read-file (concat project-dir npm-config-file)))))
+  (cdr (assoc 'optionalDependencies (json-read-file (concat project-dir npm-common--config-file)))))
 
 (defun npm-update--get-dependency-packages(project-dir)
   "Function to parse package.json in the PROJECT-DIR to find npm dependencies."
-  (cdr (assoc 'dependencies (json-read-file (concat project-dir npm-config-file)))))
+  (cdr (assoc 'dependencies (json-read-file (concat project-dir npm-common--config-file)))))
 
 (defun npm-update--choose-package ()
   "Let user choose which package to update."
   (interactive)
-  (completing-read "Select package from list: " (npm-update--get-packages (npm-get-project-dir)) nil t))
+  (completing-read "Select package from list: " (npm-update--get-packages (npm-common--get-project-dir)) nil t))
 
 (defun npm-update (&optional _args)
   "Invoke the compile mode with the update prefix-command and ARGS if provided."
-  (interactive (list (npm-arguments)))
-  (npm-compile (npm-update--get-update-command (npm-update--choose-package))))
+  (interactive (list (npm-common--arguments)))
+  (npm-common--compile (npm-update--get-update-command (npm-update--choose-package))))
 
 
 (provide 'npm-update)
