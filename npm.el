@@ -25,12 +25,6 @@
 ;; This package offers a transient interface to the npm cli.
 
 ;;; Code:
-(require 'compile)
-(require 'json)
-(require 'subr-x)
-(require 'transient)
-
-(require 'npm-common)
 (require 'npm-run)
 (require 'npm-test)
 (require 'npm-install)
