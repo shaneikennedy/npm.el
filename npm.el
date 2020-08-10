@@ -32,21 +32,7 @@
 (require 'npm-update)
 (require 'npm-init)
 
-(defvar npm-test-library "jest"
-       "Variable for configuring NPM test command.
-'jest' will use the jest.el package while anything else will
-default to the test script in package.json.")
-
 (defconst npm-mode-map compilation-mode-map)
-
-(defun npm-test-command ()
-    "Function for determining NPM test command to use."
-    (interactive)
-    (if (string-equal npm-test-library "jest")
-        (jest-popup)
-        (npm-common--compile (npm-run--get-run-command "test"))))
-
-
 
 (define-derived-mode npm-mode compilation-mode "NPM"
   "Major mode for the NPM compilation buffer."
@@ -62,7 +48,7 @@ default to the test script in package.json.")
       ("u" "Update"       npm-update)
       ("i" "Install"       npm-install-menu)
       ("r" "Run"       npm-run)
-      ("t" "Test"       npm-test-command)]]
+      ("t" "Test"       jest-popup)]]
   (interactive)
   (transient-setup 'npm-menu))
 
