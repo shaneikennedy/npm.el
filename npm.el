@@ -27,6 +27,7 @@
 ;;; Code:
 (require 'jest)
 
+(require 'npm-common)
 (require 'npm-run)
 (require 'npm-install)
 (require 'npm-update)
