@@ -42,6 +42,15 @@
   (setq mode-name "NPM")
   (setq-local truncate-lines t))
 
+(defun npm ()
+  "Entrypoint function to the package.
+This will first check to make sure there is a package.json file and then open the menu."
+  (interactive)
+  (if (npm-common--get-project-dir)
+      (call-interactively #'npm-menu)
+      (if (y-or-n-p "You are not in an NPM project, would you like to initialize one? ")
+          (call-interactively #'npm-init))))
+
 ;; Entrypoint menu
 (define-transient-command npm-menu ()
   "Open npm transient menu pop up."
@@ -53,15 +62,6 @@
   (interactive)
   (transient-setup 'npm-menu))
 
-
-(defun npm ()
-  "Entrypoint function to the package.
-This will first check to make sure there is a package.json file and then open the menu."
-  (interactive)
-  (if (npm-common--get-project-dir)
-      (call-interactively #'npm-menu)
-      (if (y-or-n-p "You are not in an NPM project, would you like to initialize one? ")
-          (call-interactively #'npm-init))))
 
 (provide 'npm)
 ;;; npm.el ends here
