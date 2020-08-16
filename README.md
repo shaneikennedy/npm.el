@@ -1,5 +1,6 @@
 # npm.el
 [![MELPA](https://melpa.org/packages/npm-badge.svg)](https://melpa.org/#/npm)
+[![MELPA Stable](https://stable.melpa.org/packages/npm-badge.svg)](https://stable.melpa.org/#/npm)
 [![Actions Status](https://github.com/shaneikennedy/npm.el/workflows/check/badge.svg)](https://github.com/shaneikennedy/npm.el/actions)
 
 
