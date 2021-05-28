@@ -34,7 +34,8 @@
 ;; Common
 (defun npm-common--get-project-dir ()
   "Function that determines the file path of the project root directory."
-  (locate-dominating-file (buffer-file-name) npm-common--config-file))
+  (locate-dominating-file (or (buffer-file-name) default-directory) 
+                          npm-common--config-file))
 
 (defun npm-common--compile (npm-command &optional args)
   "Generic compile command for NPM-COMMAND with ARGS functionality."
