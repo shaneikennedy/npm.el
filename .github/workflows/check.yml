@@ -15,6 +15,7 @@ jobs:
         emacs_version:
           - 25.3
           - 26.3
+          - 27.1
     steps:
       - uses: actions/checkout@v2
       - uses: purcell/setup-emacs@master
