@@ -42,6 +42,7 @@
   (interactive)
   (completing-read "Select script from list: " (npm-run--get-scripts (npm-common--get-project-dir)) nil t))
 
+;;;###autoload
 (defun npm-run (&optional _args)
   "Invoke the compile mode with the run prefix-command and ARGS if provided."
   (interactive (list (npm-common--arguments)))

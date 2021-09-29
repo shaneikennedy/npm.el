@@ -56,6 +56,7 @@
   (interactive)
   (completing-read "Select package from list: " (npm-update--get-packages (npm-common--get-project-dir)) nil t))
 
+;;;###autoload
 (defun npm-update (&optional _args)
   "Invoke the compile mode with the update prefix-command and ARGS if provided."
   (interactive (list (npm-common--arguments)))

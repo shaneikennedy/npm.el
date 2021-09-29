@@ -42,6 +42,7 @@
   (setq mode-name "NPM")
   (setq-local truncate-lines t))
 
+;;;###autoload
 (defun npm ()
   "Entrypoint function to the package.
 This will first check to make sure there is a package.json file and then open the menu."
