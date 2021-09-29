@@ -29,6 +29,7 @@
 (defconst npm-init--prefix-command "npm init")
 (defconst npm-init--temp-buffer ".npminit")
 
+;;;###autoload
 (defun npm-init ()
   "Initialize a project folder as a npm project."
    (interactive)
