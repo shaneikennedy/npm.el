@@ -57,6 +57,7 @@
   (transient-args 'npm-install-menu))
 
 
+;;;###autoload
 (defun npm-install (&optional args)
   "Invoke the compile mode with the install prefix-command and ARGS if provided."
   (interactive (list (npm-install-menu-arguments)))
