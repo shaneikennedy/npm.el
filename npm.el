@@ -32,6 +32,7 @@
 (require 'npm-install)
 (require 'npm-update)
 (require 'npm-init)
+(require 'npm-publish)
 
 (defconst npm-mode-map compilation-mode-map)
 
@@ -59,7 +60,8 @@ This will first check to make sure there is a package.json file and then open th
       ("u" "Update"       npm-update)
       ("i" "Install"       npm-install-menu)
       ("r" "Run"       npm-run)
-      ("t" "Test"       jest-popup)]]
+      ("t" "Test"       jest-popup)
+      ("p" "Publish"       npm-publish)]]
   (interactive)
   (transient-setup 'npm-menu))
 
