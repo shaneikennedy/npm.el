@@ -1,4 +1,4 @@
-;;; npm-init.el --- Run your npm workflows -*- lexical-binding: t; -*-
+;;; npm-publish.el --- Run your npm workflows -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2020  Shane Kennedy
 
