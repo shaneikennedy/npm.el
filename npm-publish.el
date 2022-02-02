@@ -44,7 +44,6 @@
   (transient-setup 'npm-publish-menu))
 
 (defconst npm-publish--prefix-command "npm publish")
-(defconst npm-publish--temp-buffer ".npmpulish")
 
 (defun npm-publish--get-publish-command (tarball-name)
   "Construct the shell command for a given tarball."
