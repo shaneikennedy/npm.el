@@ -30,6 +30,13 @@
   "Open npm publish transient menu pop up."
     ["Arguments"
      ("-r" "set npm registry where the package must be published"        "--registry=")
+     ("-d" "dry run"        "--dry-run")
+     ("-o" "otp"        "--otp=")
+     ("-w" "set workspace"        "--workspace=")
+     ("-s" "set workspaces"        "--workspaces")
+     ("-i" "include workspace root in the publish"        "--include-workspace-root")
+     ("-a" "set package access for other users on the registry"        "--access=")
+     ("-t" "set npm dist tag. See https://docs.npmjs.com/cli/v8/commands/npm-dist-tag"        "--tag=")
     ]
     [["Command"
       ("p" "Publish"       npm-publish)]]
@@ -39,6 +46,14 @@
 (defconst npm-publish--prefix-command "npm publish")
 (defconst npm-publish--temp-buffer ".npmpulish")
 
+(defun npm-publish--get-publish-command (tarball-name)
+  "Construct the shell command for a given tarball."
+  (concat npm-publish--prefix-command " " tarball-name))
+
+(defun npm-publish--choose-tarball ()
+  "Let user choose which package to publish."
+  (interactive)
+  (read-file-name "Type the path of the tarball you want to publish: " ()))
 
 (defun npm-publish-menu-arguments nil
   "Arguments function for transient."
@@ -49,7 +64,7 @@
   "Publish a project directory as an NPM package to a registry"
    (interactive (list (npm-publish-menu-arguments)))
    (let* ((arguments (string-join args " "))
-          (npm-command npm-publish--prefix-command))
+          (npm-command (npm-publish--get-publish-command (npm-publish--choose-tarball))))
      (npm-common--compile npm-command arguments)))
 
 (provide 'npm-publish)
