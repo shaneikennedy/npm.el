@@ -61,7 +61,7 @@ This will first check to make sure there is a package.json file and then open th
       ("i" "Install"       npm-install-menu)
       ("r" "Run"       npm-run)
       ("t" "Test"       jest-popup)
-      ("p" "Publish"       npm-publish)]]
+      ("p" "Publish"       npm-publish-menu)]]
   (interactive)
   (transient-setup 'npm-menu))
 
