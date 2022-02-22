@@ -29,8 +29,4 @@ This package is available on MELPA
 
 As of right now this package only supports the `npm run, test, install, and update` commands but I hope to add more functionality soon. If you have a command you would really like to see added here please open an issue!
 
-NPM test uses the [emacs-jest](https://github.com/Emiller88/emacs-jest/tree/4c6ddd3304e199211f0fbdc8a5b83ccbfe1f7fcc) package by default. If your project does not use Jest for its testing framework, you will need to set `npm-test-library` to nil (or just not "jest")
-
-``` emacs-lisp
-(setq npm-test-library nil)
-```
+NPM test uses the [emacs-jest](https://github.com/Emiller88/emacs-jest/tree/4c6ddd3304e199211f0fbdc8a5b83ccbfe1f7fcc) package by default.
