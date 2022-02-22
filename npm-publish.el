@@ -46,7 +46,7 @@
 (defconst npm-publish--prefix-command "npm publish")
 
 (defun npm-publish--get-publish-command (tarball-name)
-  "Construct the shell command for a given tarball."
+  "Construct the shell command for a given TARBALL-NAME."
   (concat npm-publish--prefix-command " " tarball-name))
 
 (defun npm-publish--choose-tarball ()
@@ -60,7 +60,7 @@
 
 ;;;###autoload
 (defun npm-publish (&optional args)
-  "Publish a project directory as an NPM package to a registry"
+  "Invoke the compile mode with ARGS to publish an NPM package to a registry."
    (interactive (list (npm-publish-menu-arguments)))
    (let* ((arguments (string-join args " "))
           (npm-command (npm-publish--get-publish-command (npm-publish--choose-tarball))))
