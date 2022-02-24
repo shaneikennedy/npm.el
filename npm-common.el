@@ -29,6 +29,11 @@
 (require 'subr-x)
 (require 'transient)
 
+(defgroup npm ()
+  "Group for npm."
+  :group 'tools
+  :prefix "npm-")
+
 (defconst npm-common--config-file "package.json")
 
 ;; Common
