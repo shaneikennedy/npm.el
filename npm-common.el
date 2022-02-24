@@ -36,6 +36,36 @@
 
 (defconst npm-common--config-file "package.json")
 
+(defcustom npm-common-buffer-name-function "*npm*"
+  "Buffer name for `npm' command, or function which return buffer name.
+The function takes three arguments, ROOT, NPM-COMMAND, ARGS.
+ROOT is project root directory.  NPM-COMMAND is npm command string.
+ARGS is list of arguments passed to npm command.
+
+You can use `npm-common-create-unique-buffer-name' to use unique buffer name
+among all sesstions."
+  :group 'npm
+  :type '(choice
+          (string :tag "Use same buffer through all sessions")
+          (const :tag "Use unique buffer name among all sessions" npm-common-create-unique-buffer-name)
+          function))
+
+(defun npm-common-create-unique-buffer-name (root npm-command _args)
+  "Create buffer name unique to ROOT and NPM-COMMAND."
+  (concat "*" npm-command " in " root "*"))
+
+(defun npm-common--generate-buffer-name-function (root npm-command args)
+  "Generate function which return buffer name to pass `compilation-start'.
+ROOT is project root directory.  NPM-COMMAND is npm command string.
+ARGS is list of arguments passed to npm command.
+
+This function uses `npm-common-buffer-name-function'."
+  (lambda (_)
+    (if (stringp npm-common-buffer-name-function)
+        npm-common-buffer-name-function
+      (funcall npm-common-buffer-name-function
+               root npm-command args))))
+
 ;; Common
 (defun npm-common--get-project-dir ()
   "Function that determines the file path of the project root directory."
@@ -44,9 +74,10 @@
 
 (defun npm-common--compile (npm-command &optional args)
   "Generic compile command for NPM-COMMAND with ARGS functionality."
-  (let ((buffer-name "*npm*"))
-    (compilation-start (string-join (list npm-command args) " ") 'npm-mode)
-    (with-current-buffer "*npm*" (rename-buffer buffer-name))))
+  (compilation-start (string-join (list npm-command args) " ")
+                     'npm-mode
+                     (npm-common--generate-buffer-name-function
+                      (npm-common--get-project-dir) npm-command args)))
 
 (defun npm-common--arguments nil
   "Arguments function for transient."
