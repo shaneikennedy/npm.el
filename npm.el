@@ -54,7 +54,7 @@ This will first check to make sure there is a package.json file and then open th
           (call-interactively #'npm-init))))
 
 ;; Entrypoint menu
-(define-transient-command npm-menu ()
+(transient-define-prefix npm-menu ()
   "Open npm transient menu pop up."
     [["Command"
       ("u" "Update"       npm-update)
