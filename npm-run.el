@@ -34,7 +34,7 @@
 
 (defun npm-run--get-scripts (project-dir)
   "Function to parse package.json in the PROJECT-DIR to find npm scripts."
-  (cdr (assoc 'scripts (json-read-file (concat project-dir npm-common--config-file)))))
+  (mapcar 'car (cdr (assoc 'scripts (json-read-file (concat project-dir npm-common--config-file))))))
 
 
 (defun npm-run--choose-script ()
