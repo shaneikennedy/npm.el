@@ -27,6 +27,11 @@ This package is available on MELPA
 ![Install screen for npm](assets/npm-install.png "NPM install")         | ![Update screen for npm](assets/npm-update.png "NPM update")
 
 
+### Common workflows
+
+If you use this package to run your dev server, then the default configuration in this package will kill the process every time you need to install/update a package or run a different script (aka not ideal). To keep your dev server (or any long running process) running while you run your other npm workflows with this package, you can set `npm-common-buffer-name-function` to `npm-common-create-unique-buffer-name` which will generate a unique buffer name for each of your workflows. You can set this directly with `setq` or through the cusomtimzation menu for `npm`.
+
+
 As of right now this package only supports the `npm run, test, install, update, and publish` commands but I hope to add more functionality soon. If you have a command you would really like to see added here please open an issue!
 
 NPM test uses the [emacs-jest](https://github.com/Emiller88/emacs-jest/tree/4c6ddd3304e199211f0fbdc8a5b83ccbfe1f7fcc) package by default.
