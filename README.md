@@ -34,4 +34,4 @@ If you use this package to run your dev server, then the default configuration i
 
 As of right now this package only supports the `npm run, test, install, update, and publish` commands but I hope to add more functionality soon. If you have a command you would really like to see added here please open an issue!
 
-NPM test uses the [emacs-jest](https://github.com/Emiller88/emacs-jest/tree/4c6ddd3304e199211f0fbdc8a5b83ccbfe1f7fcc) package by default.
+NPM test uses the [emacs-jest](https://github.com/Emiller88/emacs-jest/tree/4c6ddd3304e199211f0fbdc8a5b83ccbfe1f7fcc) package by default. If you want to run your project's custom test script, for now, use npm-run and choose "test".
