@@ -26,7 +26,7 @@
 ;;; Code:
 (require 'npm-common)
 
-(define-transient-command npm-publish-menu ()
+(transient-define-prefix npm-publish-menu ()
   "Open npm publish transient menu pop up."
     ["Arguments"
      ("-r" "set npm registry where the package must be published"        "--registry=")

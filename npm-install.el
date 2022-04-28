@@ -26,7 +26,7 @@
 ;;; Code:
 (require 'npm-common)
 
-(define-transient-command npm-install-menu ()
+(transient-define-prefix npm-install-menu ()
   "Open npm install transient menu pop up."
     ["Arguments"
      ("-f" "Force fetching even if copy exists on disk"        "--force")
