@@ -61,8 +61,8 @@
   "Invoke the compile mode with the install prefix-command and ARGS if provided but no packages"
   (interactive)
   (let ((arguments (string-join args " "))
-		(npm-command (npm-install--get-install-command "")))
-	(npm-common--compile npm-command arguments)))
+	      (npm-command (npm-install--get-install-command "")))
+    (npm-common--compile npm-command arguments)))
 
 ;;;###autoload
 (defun npm-install (&optional args)
