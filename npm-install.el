@@ -37,7 +37,7 @@
      ("-n" "Do not save to package.json"        "--no-save")]
     [["Command"
       ("i" "Install"       npm-install)
-	  ("I" "Install currently required packages only" npm-install-current)]]
+      ("I" "Install currently required packages only" npm-install-current)]]
   (interactive)
   (transient-setup 'npm-install-menu))
 
