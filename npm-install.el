@@ -36,8 +36,8 @@
      ("-o" "Save as optional dependency"        "--save-optional")
      ("-n" "Do not save to package.json"        "--no-save")]
     [["Command"
-      ("i" "Install"       npm-install)
-      ("I" "Install currently required packages only" npm-install-current)]]
+    ("i" "Install new package"       npm-install)
+    ("I" "Install current packages (in package.json)" npm-install-current)]]
   (interactive)
   (transient-setup 'npm-install-menu))
 
@@ -58,7 +58,7 @@
   (transient-args 'npm-install-menu))
 
 (defun npm-install-current (&optional args)
-  "Invoke the compile mode with the install prefix-command and ARGS if provided but no packages"
+  "Invoke the compile mode with the install prefix-command and ARGS if provided but no packages."
   (interactive)
   (let ((arguments (string-join args " "))
 	      (npm-command (npm-install--get-install-command "")))
