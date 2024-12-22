@@ -4,7 +4,7 @@
 
 ;; Author: Shane Kennedy
 ;; Homepage: https://github.com/shaneikennedy/npm.el
-;; Package-Requires: ((emacs "25.1") (transient "0.1.0") (jest "20200625"))
+;; Package-Requires: ((emacs "25.1") (transient "0.1.0") (jest "20220807.2243"))
 ;; Keywords: tools
 ;; Version: 0
 
