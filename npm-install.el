@@ -34,6 +34,7 @@
      ("-p" "Save as production dependency"        "--save-prod")
      ("-d" "Save as development dependency"        "--save-dev")
      ("-o" "Save as optional dependency"        "--save-optional")
+     ("-e" "Save exact version"        "--save-exact")
      ("-n" "Do not save to package.json"        "--no-save")]
     [["Command"
     ("i" "Install new package"       npm-install)
